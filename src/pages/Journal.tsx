@@ -83,6 +83,8 @@ export default function Journal() {
 
   const hasFilters = selectedMonth !== null || locationKeyword.trim() !== '';
 
+  const escapeRegExp = (str: string) => str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
   return (
     <div className="min-h-screen">
       <PageHeader
@@ -255,7 +257,7 @@ export default function Journal() {
                                           <MapPin className="w-3 h-3 inline" />
                                           {locationKeyword && journal.location.toLowerCase().includes(locationKeyword.toLowerCase()) ? (
                                             <>
-                                              {journal.location.split(new RegExp(`(${locationKeyword})`, 'i')).map((part, i) =>
+                                              {journal.location.split(new RegExp(`(${escapeRegExp(locationKeyword)})`, 'i')).map((part, i) =>
                                                 part.toLowerCase() === locationKeyword.toLowerCase() ? (
                                                   <mark key={i} className="bg-amber-200 rounded px-0.5">
                                                     {part}
